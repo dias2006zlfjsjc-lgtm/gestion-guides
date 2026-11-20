@@ -1,1 +1,117 @@
-<p>guide-list works!</p>
+<section class="conteneur">
+  <h1>Répertoire des guides touristiques</h1>
+  @if (message()) {
+    <p class="alerte" role="status">{{ message() }}</p>
+  }
+  <div class="filtres">
+    <mat-form-field appearance="outline" class="champ-recherche">
+      <mat-label>Rechercher (nom, prénom, spécialité)</mat-label>
+      <input matInput type="search" [value]="recherche()" (input)="mettreAJourRecherche($event)" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Région</mat-label>
+      <mat-select [value]="regionChoisie()" (selectionChange)="regionChoisie.set($event.value)">
+        <mat-option value="">Toutes</mat-option>
+        @for (r of regions(); track r) {
+          <mat-option [value]="r">{{ r }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Statut</mat-label>
+      <mat-select [value]="statutChoisi()" (selectionChange)="statutChoisi.set($event.value)">
+        <mat-option value="">Tous</mat-option>
+        @for (s of statuts; track s) {
+          <mat-option [value]="s">{{ s }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <button
+      mat-stroked-button
+      type="button"
+      class="btn-reinit"
+      (click)="reinitialiserFiltres()"
+      [disabled]="!filtresActifs()"
+    >
+      Réinitialiser
+    </button>
+  </div>
+
+  @if (guides().length === 0) {
+    <p class="etat-vide">Aucun guide enregistré pour le moment.</p>
+  } @else if (guidesFiltres().length === 0) {
+    <p class="etat-vide" role="status">
+      Aucun résultat ne correspond à votre recherche ou à vos filtres. Modifiez-les ou cliquez sur «
+      Réinitialiser ».
+    </p>
+  } @else {
+    <p class="compteur" role="status">{{ guidesFiltres().length }} guide(s) affiché(s)</p>
+
+    <div class="tableau-conteneur">
+      <table mat-table [dataSource]="guidesFiltres()">
+        <ng-container matColumnDef="nom">
+          <th mat-header-cell *matHeaderCellDef>Nom</th>
+          <td mat-cell *matCellDef="let g">{{ g.nom }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="prenom">
+          <th mat-header-cell *matHeaderCellDef>Prénom</th>
+          <td mat-cell *matCellDef="let g">{{ g.prenom }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="specialite">
+          <th mat-header-cell *matHeaderCellDef>Spécialité</th>
+          <td mat-cell *matCellDef="let g">{{ g.specialite }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="region">
+          <th mat-header-cell *matHeaderCellDef>Région</th>
+          <td mat-cell *matCellDef="let g">{{ g.region }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="note">
+          <th mat-header-cell *matHeaderCellDef>Note</th>
+          <td mat-cell *matCellDef="let g">{{ g.note | number: '1.1-1' }} / 5</td>
+        </ng-container>
+
+        <ng-container matColumnDef="statut">
+          <th mat-header-cell *matHeaderCellDef>Statut</th>
+          <td mat-cell *matCellDef="let g">
+            <span
+              class="badge"
+              [class.badge-actif]="g.statut === 'Actif'"
+              [class.badge-inactif]="g.statut === 'Inactif'"
+            >
+              {{ g.statut }}
+            </span>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let g">
+            <a
+              mat-stroked-button
+              [routerLink]="['/guides', g.id, 'modifier']"
+              [attr.aria-label]="'Modifier ' + g.prenom + ' ' + g.nom"
+              >Modifier</a
+            >
+            <button
+              mat-stroked-button
+              type="button"
+              class="btn-suppr"
+              [attr.aria-label]="'Supprimer ' + g.prenom + ' ' + g.nom"
+              (click)="supprimer(g)"
+            >
+              Supprimer
+            </button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="colonnes"></tr>
+        <tr mat-row *matRowDef="let row; columns: colonnes"></tr>
+      </table>
+    </div>
+  }
+</section>
