@@ -1,1 +1,21 @@
 <p>guide-form works!</p>
+{{ modeModification() ? 'Modifier un guide' : 'Ajouter un guide' }} @if (messageSucces()) {
+{{ messageSucces() }}
+
+} @if (messageErreur()) {
+{{ messageErreur() }}
+
+}
+Prénom 
+ {{ erreurDe('prenom') }} Nom 
+ {{ erreurDe('nom') }} E-mail 
+prenom.nom@exemple.sn
+ {{ erreurDe('email') }} Téléphone 
+77 123 45 67
+ {{ erreurDe('telephone') }} Région @for (r of regions; track r) { {{ r }} } {{ erreurDe('region') }} Spécialité 
+Patrimoine, écotourisme…
+ {{ erreurDe('specialite') }} Note (0 à 5) 
+ {{ erreurDe('note') }} Statut Actif Inactif
+Tous les champs sont obligatoires.
+
+{{ modeModification() ? 'Enregistrer les modifications' : 'Ajouter le guide' }} Annuler
