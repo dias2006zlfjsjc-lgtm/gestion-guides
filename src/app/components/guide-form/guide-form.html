@@ -1,21 +1,81 @@
-<p>guide-form works!</p>
-{{ modeModification() ? 'Modifier un guide' : 'Ajouter un guide' }} @if (messageSucces()) {
-{{ messageSucces() }}
+<mat-card class="carte-formulaire">
+  <mat-card-header>
+    <mat-card-title>{{ modeModification() ? 'Modifier un guide' : 'Ajouter un guide' }}</mat-card-title>
+  </mat-card-header>
 
-} @if (messageErreur()) {
-{{ messageErreur() }}
+  <mat-card-content>
+    @if (messageSucces()) {
+      <p class="message succes" role="status">{{ messageSucces() }}</p>
+    }
+    @if (messageErreur()) {
+      <p class="message erreur-globale" role="alert">{{ messageErreur() }}</p>
+    }
 
-}
-Prénom 
- {{ erreurDe('prenom') }} Nom 
- {{ erreurDe('nom') }} E-mail 
-prenom.nom@exemple.sn
- {{ erreurDe('email') }} Téléphone 
-77 123 45 67
- {{ erreurDe('telephone') }} Région @for (r of regions; track r) { {{ r }} } {{ erreurDe('region') }} Spécialité 
-Patrimoine, écotourisme…
- {{ erreurDe('specialite') }} Note (0 à 5) 
- {{ erreurDe('note') }} Statut Actif Inactif
-Tous les champs sont obligatoires.
+    <form [formGroup]="formulaire" (ngSubmit)="soumettre()" novalidate>
+      <div class="grille">
+        <mat-form-field appearance="outline">
+          <mat-label>Prénom</mat-label>
+          <input matInput formControlName="prenom" autocomplete="given-name" />
+          <mat-error>{{ erreurDe('prenom') }}</mat-error>
+        </mat-form-field>
 
-{{ modeModification() ? 'Enregistrer les modifications' : 'Ajouter le guide' }} Annuler
+        <mat-form-field appearance="outline">
+          <mat-label>Nom</mat-label>
+          <input matInput formControlName="nom" autocomplete="family-name" />
+          <mat-error>{{ erreurDe('nom') }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>E-mail</mat-label>
+          <input matInput type="email" formControlName="email" placeholder="prenom.nom@exemple.sn" />
+          <mat-error>{{ erreurDe('email') }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Téléphone</mat-label>
+          <input matInput type="tel" formControlName="telephone" placeholder="77 123 45 67" />
+          <mat-error>{{ erreurDe('telephone') }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Région</mat-label>
+          <mat-select formControlName="region">
+            @for (r of regions; track r) {
+              <mat-option [value]="r">{{ r }}</mat-option>
+            }
+          </mat-select>
+          <mat-error>{{ erreurDe('region') }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Spécialité</mat-label>
+          <input matInput formControlName="specialite" placeholder="Patrimoine, écotourisme…" />
+          <mat-error>{{ erreurDe('specialite') }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Note (0 à 5)</mat-label>
+          <input matInput type="number" step="0.1" min="0" max="5" formControlName="note" />
+          <mat-error>{{ erreurDe('note') }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Statut</mat-label>
+          <mat-select formControlName="statut">
+            <mat-option value="Actif">Actif</mat-option>
+            <mat-option value="Inactif">Inactif</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <p class="aide">Tous les champs sont obligatoires.</p>
+
+      <div class="actions">
+        <button mat-flat-button type="submit">
+          {{ modeModification() ? 'Enregistrer les modifications' : 'Ajouter le guide' }}
+        </button>
+        <button mat-stroked-button type="button" (click)="annuler.emit()">Annuler</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
