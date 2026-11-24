@@ -6,6 +6,6 @@ export const routes: Routes = [
   { path: '', redirectTo: 'guides', pathMatch: 'full' },
   { path: 'guides', component: GuideList },
   { path: 'guides/nouveau', component: GuideEdition },
-  { path: 'guides/modifier/:id', component: GuideEdition },
+  { path: 'guides/:id/modifier', component: GuideEdition },
   { path: '**', redirectTo: 'guides' },
 ];

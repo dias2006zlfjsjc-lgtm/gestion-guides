@@ -1,6 +1,7 @@
-<mat-toolbar color="primary">
-  <a routerLink="/guides" class="titre">Gestion des guides touristiques</a>
-</mat-toolbar>
+<nav class="menu" aria-label="Navigation principale">
+  <a routerLink="/guides" routerLinkActive="actif" [routerLinkActiveOptions]="{ exact: true }">Liste des guides</a>
+  <a routerLink="/guides/nouveau" routerLinkActive="actif">Ajouter un guide</a>
+</nav>
 
 <main class="contenu">
   <router-outlet />

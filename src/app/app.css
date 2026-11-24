@@ -1,9 +1,21 @@
-.titre {
-  color: inherit;
+.menu {
+  display: flex;
+  gap: 16px;
+  padding: 12px 16px;
+  background: #049207;
+}
+.menu a {
+  color: #fff;
   text-decoration: none;
   font-weight: 500;
+  padding: 4px 8px;
+  border-radius: 4px;
 }
-
+.menu a:hover,
+.menu a:focus-visible,
+.menu a.actif {
+  background: rgba(255, 255, 255, 0.2);
+}
 .contenu {
   max-width: 1100px;
   margin: 0 auto;
