@@ -134,7 +134,7 @@ Les méthodes du service renverraient des `Observable` au lieu de valeurs direct
 
 ## Captures d'écran
 
-Les captures se trouvent dans le dossier `captures/` (à ajouter) :
+Les captures se trouvent dans le dossier `captures/`  :
 
 - `captures/liste.png` : répertoire avec recherche et filtres
 - `captures/formulaire.png` : formulaire d'ajout avec validations
