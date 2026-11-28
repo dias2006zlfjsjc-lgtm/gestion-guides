@@ -1,0 +1,6 @@
+@if (introuvable()) {
+  <p>Guide introuvable.</p>
+  <button type="button" (click)="retour()">Retour à la liste</button>
+} @else {
+  <app-guide-form [guide]="guide()" (enregistrer)="enregistrer($event)" (annuler)="retour()" />
+}

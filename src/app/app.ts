@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
-import { MatToolbarModule } from '@angular/material/toolbar';
+import { Component, signal } from '@angular/core';
+import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
+  imports: [RouterOutlet, RouterLink, RouterLinkActive],
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, MatToolbarModule],
-  templateUrl: './app.html',
   styleUrl: './app.css',
+  templateUrl: './app.html',
 })
-export class App {}
+export class App {
+  protected readonly title = signal('gestion-guides');
+}

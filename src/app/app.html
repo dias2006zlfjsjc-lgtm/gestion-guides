@@ -1,6 +1,12 @@
-<mat-toolbar color="primary">
-  <a routerLink="/guides" class="titre">Gestion des guides touristiques</a>
-</mat-toolbar>
+<header class="entete">
+  <div class="entete-contenu">
+    <a routerLink="/guides" class="marque">Guides touristiques du Sénégal</a>
+    <nav class="menu" aria-label="Navigation principale">
+      <a routerLink="/guides" routerLinkActive="actif" [routerLinkActiveOptions]="{ exact: true }">Liste des guides</a>
+      <a routerLink="/guides/nouveau" routerLinkActive="actif">Ajouter un guide</a>
+    </nav>
+  </div>
+</header>
 
 <main class="contenu">
   <router-outlet />
